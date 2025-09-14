@@ -30,6 +30,15 @@ public class ProductService {
 
     public ProductDTO fromEntityToDTO(Product product) {
         log.info("fromEntityToDTO in ProductService");
+
+        if (product == null) {
+            throw new IllegalArgumentException("Product cannot be null");
+        }
+
+        if (product.getSupplier() == null) {
+            throw new IllegalStateException("Product has no associated supplier");
+        }
+
         ProductDTO productDTO = new ProductDTO();
 
         productDTO.setId(product.getId());
@@ -44,6 +53,15 @@ public class ProductService {
 
     public Product fromDTOToEntity(ProductDTO productDTO) {
         log.info("fromDTOtoEntity in ProductService");
+
+        if (productDTO == null) {
+            throw new IllegalArgumentException("ProductDTO cannot be null");
+        }
+
+        if (productDTO.getSupplierId() == null) {
+            throw new IllegalStateException("ProductDTO has no associated supplier Id");
+        }
+
         Product product;
         if(productDTO.getId() != null) {
             product = productRepository.findById(productDTO.getId()).orElse(new Product());
@@ -86,6 +104,11 @@ public class ProductService {
     public ProductDTO getProductById(Long id) {
 
         log.info("getProductById in ProductService");
+
+        if (id < 0) {
+            throw new IllegalArgumentException("Id cannot be negative");
+        }
+
         Product product = productRepository.findById(id).orElseThrow(()-> new EntityNotFoundException("Cannot find product with id " + id));
         return fromEntityToDTO(product);
     }
@@ -93,6 +116,10 @@ public class ProductService {
     public ProductDTO saveProduct(ProductDTO productDTO) {
 
         log.info("saveProducty in ProductService");
+
+        if (productDTO == null) {
+            throw new IllegalArgumentException("ProductDTO cannot be null");
+        }
 
         Supplier supplier = supplierRepository.findById(productDTO.getSupplierId()).orElseThrow(()-> new EntityNotFoundException("Cannot find supplier with id " + productDTO.getSupplierId()));
 
@@ -109,7 +136,13 @@ public class ProductService {
     }
 
     public void deleteProduct(Long id) {
+
         log.info("deleteProduct in ProductService");
+
+        if(!productRepository.existsById(id)) {
+            throw new EntityNotFoundException("Id does not exist");
+        }
+
         productRepository.deleteById(id);
     }
 
@@ -133,6 +166,10 @@ public class ProductService {
     }
 
     public ProductSupplierDTO getProductSupplier(Long id) {
+
+        if(!productRepository.existsById(id)) {
+            throw new EntityNotFoundException("Id does not exist");
+        }
 
         Product product=productRepository.findProductWithSupplier(id);
 
