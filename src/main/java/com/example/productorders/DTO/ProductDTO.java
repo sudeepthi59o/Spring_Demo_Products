@@ -13,7 +13,12 @@ public class ProductDTO {
     private String name;
     private Double price;
     private Double stock;
-    private Supplier supplier;
+    private Long supplierId;
 
-
+    public ProductDTO(String name, Double price, Double stock, Long supplierId) {
+        this.name = name;
+        this.price = price;
+        this.stock = stock;
+        this.supplierId = supplierId;
+    }
 }
