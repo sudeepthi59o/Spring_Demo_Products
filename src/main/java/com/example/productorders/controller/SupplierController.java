@@ -7,6 +7,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/suppliers")
 @CrossOrigin(origins = "*")
@@ -18,6 +20,12 @@ public class SupplierController {
     @Autowired
     public SupplierController(SupplierService supplierService) {
         this.supplierService = supplierService;
+    }
+
+    @GetMapping
+    public List<SupplierDTO> getSuppliers() {
+        log.info("getSuppliers in SupplierController");
+        return supplierService.getSuppliers();
     }
 
     @GetMapping("/{id}")

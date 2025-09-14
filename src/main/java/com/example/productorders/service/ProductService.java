@@ -1,6 +1,8 @@
 package com.example.productorders.service;
 
 import com.example.productorders.DTO.ProductDTO;
+import com.example.productorders.DTO.ProductSupplierDTO;
+import com.example.productorders.DTO.SupplierDTO;
 import com.example.productorders.model.Product;
 import com.example.productorders.model.Supplier;
 import com.example.productorders.repository.ProductRepository;
@@ -9,6 +11,9 @@ import jakarta.persistence.EntityNotFoundException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 @Slf4j
@@ -63,6 +68,14 @@ public class ProductService {
 
     }
 
+    private List<ProductDTO> fromEntityToDTOList(List<Product> products) {
+        List<ProductDTO> productDTOS = new ArrayList<>();
+        for(Product p: products) {
+            productDTOS.add(fromEntityToDTO(p));
+        }
+        return productDTOS;
+    }
+
     public Product saveEntity(Product product) {
 
         log.info("saveEntity in ProductService");
@@ -113,4 +126,19 @@ public class ProductService {
         saveEntity(product);
         return fromEntityToDTO(product);
     }
+
+    public List<ProductDTO> getProducts() {
+        List<Product> products = productRepository.findAll();
+        return fromEntityToDTOList(products);
+    }
+
+    public ProductSupplierDTO getProductSupplier(Long id) {
+
+        Product product=productRepository.findProductWithSupplier(id);
+
+         return new ProductSupplierDTO(product.getName(), product.getPrice(), product.getStock(),product.getSupplier().getName(), product.getSupplier().getPhoneNum(),product.getSupplier().getEmail());
+
+    }
+
+
 }

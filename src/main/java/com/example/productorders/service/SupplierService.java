@@ -8,6 +8,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Service
 @Slf4j
 public class SupplierService {
@@ -51,6 +54,14 @@ public class SupplierService {
         return supplier;
     }
 
+    public List<SupplierDTO> fromEntityToDTOList(List<Supplier> suppliers) {
+        List<SupplierDTO> supplierDTOS = new ArrayList<>();
+        for(Supplier s: suppliers) {
+            supplierDTOS.add(fromEntityToDTO(s));
+        }
+        return  supplierDTOS;
+    }
+
     public Supplier saveEntity(Supplier supplier) {
         log.info("saveEntity in SupplierService");
         return supplierRepository.save(supplier);
@@ -91,5 +102,10 @@ public class SupplierService {
     public void deleteSupplier(Long id) {
         log.info("deleteSupplier in SupplierService");
         supplierRepository.deleteById(id);
+    }
+
+    public List<SupplierDTO> getSuppliers() {
+        List<Supplier> suppliers= supplierRepository.findAll();
+        return fromEntityToDTOList(suppliers);
     }
 }
