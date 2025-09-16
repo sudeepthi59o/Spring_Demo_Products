@@ -2,7 +2,6 @@ package com.example.productorders.service;
 
 import com.example.productorders.DTO.ProductDTO;
 import com.example.productorders.DTO.ProductSupplierDTO;
-import com.example.productorders.DTO.SupplierDTO;
 import com.example.productorders.model.Product;
 import com.example.productorders.model.Supplier;
 import com.example.productorders.repository.ProductRepository;
@@ -115,7 +114,7 @@ public class ProductService {
 
     public ProductDTO saveProduct(ProductDTO productDTO) {
 
-        log.info("saveProducty in ProductService");
+        log.info("saveProduct in ProductService");
 
         if (productDTO == null) {
             throw new IllegalArgumentException("ProductDTO cannot be null");

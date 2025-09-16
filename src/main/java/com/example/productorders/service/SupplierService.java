@@ -24,6 +24,11 @@ public class SupplierService {
 
     public SupplierDTO fromEntityToDTO(Supplier supplier) {
         log.info("fromEntityToDTO in SupplierService");
+
+        if(supplier == null) {
+            throw new IllegalArgumentException("Supplier cannot be null");
+        }
+
         SupplierDTO supplierDTO = new SupplierDTO();
 
         supplierDTO.setId(supplier.getId());
@@ -37,6 +42,11 @@ public class SupplierService {
 
     public Supplier fromDTOTOEntity(SupplierDTO supplierDTO) {
         log.info("fromDTOTOEntity in SupplierService");
+
+        if(supplierDTO == null) {
+            throw new IllegalArgumentException("SupplierDTO cannot be null");
+        }
+
         Supplier supplier;
         if(supplierDTO.getId() != null) {
             supplier = supplierRepository.findById(supplierDTO.getId()).orElse(new Supplier());
@@ -69,11 +79,21 @@ public class SupplierService {
 
     public SupplierDTO getSupplierById(Long id) {
         log.info("getSupplierById in SupplierService");
+
+        if(id<0)
+        {
+            throw new IllegalArgumentException("Supplier Id cannot be negative");
+        }
         Supplier supplier = supplierRepository.findById(id).orElseThrow(()-> new EntityNotFoundException("Cannot find supplier with id"+ id));
         return fromEntityToDTO(supplier);
     }
 
     public SupplierDTO saveSupplier(SupplierDTO supplierDTO) {
+
+        if(supplierDTO == null) {
+            throw new EntityNotFoundException("Supplier DTO cannot be null");
+        }
+
         log.info("saveSupplier in SupplierService");
         Supplier supplier = new Supplier();
 
@@ -101,6 +121,11 @@ public class SupplierService {
 
     public void deleteSupplier(Long id) {
         log.info("deleteSupplier in SupplierService");
+
+        if(!supplierRepository.existsById(id)) {
+            throw new EntityNotFoundException("Id does not exist");
+        }
+
         supplierRepository.deleteById(id);
     }
 
