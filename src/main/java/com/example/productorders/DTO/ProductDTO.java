@@ -1,6 +1,5 @@
 package com.example.productorders.DTO;
 
-import com.example.productorders.model.Supplier;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

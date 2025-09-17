@@ -35,3 +35,8 @@ build/
 # Ignore local application config
 /src/main/resources/application-local.properties
 
+# Ignore test HTML reports
+htmlReport/
+
+#Ignore environment variables
+.env

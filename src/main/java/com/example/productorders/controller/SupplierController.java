@@ -1,7 +1,6 @@
 package com.example.productorders.controller;
 
 import com.example.productorders.DTO.SupplierDTO;
-import com.example.productorders.model.Supplier;
 import com.example.productorders.service.SupplierService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
